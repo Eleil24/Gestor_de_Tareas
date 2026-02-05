@@ -70,84 +70,110 @@ const TasksPage = () => {
     };
 
     return (
-        <div className="flex-col">
-            <header className="flex-row" style={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div className="flex flex-col gap-8 w-full">
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 style={{ marginBottom: '0.5rem' }}>Gestor de Tareas</h1>
-                    <p className="text-sm">Administra tus pendientes de forma eficiente.</p>
+                    <h1 className="mb-2 text-3xl font-bold text-text-primary">Gestor de Tareas</h1>
+                    <p className="text-sm text-text-secondary">Administra tus pendientes de forma eficiente.</p>
                 </div>
             </header>
 
-            <section className="card">
-                <h3>Nueva Tarea</h3>
-                <div className="flex-row">
+            <section className="bg-bg-surface border border-border rounded-lg p-6 shadow-md">
+                <h3 className="text-xl font-semibold mb-4 text-text-primary">Nueva Tarea</h3>
+                <div className="flex flex-col md:flex-row gap-4">
                     <input
+                        className="flex-1 bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
                         type="text"
                         placeholder="Título de la tarea"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        style={{ flex: 1 }}
                     />
                     <input
+                        className="flex-[2] bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
                         type="text"
                         placeholder="Descripción opcional"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        style={{ flex: 2 }}
                     />
-                    <button className="primary" onClick={handleCreateTask}>
+                    <button
+                        className="bg-primary hover:bg-primary-hover text-white px-6 py-2 rounded font-medium transition-colors"
+                        onClick={handleCreateTask}
+                    >
                         Crear +
                     </button>
                 </div>
             </section>
 
-            <section className="card">
-                <h3>Filtros</h3>
-                <div className="flex-row">
-                    <input
-                        type="text"
-                        placeholder="Buscar por título..."
-                        value={filterTitle}
-                        onChange={(e) => setFilterTitle(e.target.value)}
-                        style={{ flex: 1 }}
-                    />
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
-                    <span className="text-sm">hasta</span>
-                    <input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
-                    <select
-                        value={filterCompleted}
-                        onChange={(e) => setFilterCompleted(e.target.value)}
-                    >
-                        <option value="">Estado: Todos</option>
-                        <option value="true">Completados</option>
-                        <option value="false">Pendientes</option>
-                    </select>
-                    <button onClick={() => {
-                        setFilterTitle("");
-                        setStartDate("");
-                        setEndDate("");
-                        setFilterCompleted("");
-                        setPage(0);
-                    }}>
-                        Reset
-                    </button>
+            <section className="bg-bg-surface border border-border rounded-lg p-6 shadow-md">
+                <h3 className="text-xl font-semibold mb-4 text-text-primary">Filtros</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 items-center">
+                    <div className="lg:col-span-4">
+                        <input
+                            className="w-full bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
+                            type="text"
+                            placeholder="Buscar por título..."
+                            value={filterTitle}
+                            onChange={(e) => setFilterTitle(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="lg:col-span-2">
+                        <input
+                            className="w-full bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="hidden lg:block text-center text-sm text-text-secondary lg:col-span-auto">
+                        hasta
+                    </div>
+
+                    <div className="lg:col-span-2">
+                        <input
+                            className="w-full bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="lg:col-span-2">
+                        <select
+                            className="w-full bg-bg-input border border-border rounded px-4 py-2 text-text-primary focus:outline-none focus:border-primary transition-colors"
+                            value={filterCompleted}
+                            onChange={(e) => setFilterCompleted(e.target.value)}
+                        >
+                            <option value="">Estado: Todos</option>
+                            <option value="true">Completados</option>
+                            <option value="false">Pendientes</option>
+                        </select>
+                    </div>
+
+                    <div className="lg:col-span-1">
+                        <button
+                            className="w-full bg-bg-surface hover:bg-bg-surface-hover border border-border text-text-primary px-4 py-2 rounded font-medium transition-colors"
+                            onClick={() => {
+                                setFilterTitle("");
+                                setStartDate("");
+                                setEndDate("");
+                                setFilterCompleted("");
+                                setPage(0);
+                            }}
+                        >
+                            Reset
+                        </button>
+                    </div>
                 </div>
             </section>
 
             {tasks.length === 0 ? (
-                <div className="card" style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
+                <div className="bg-bg-surface border border-border rounded-lg p-8 text-center text-text-secondary shadow-md">
                     <p>No se encontraron tareas que coincidan con la búsqueda.</p>
                 </div>
             ) : (
-                <div className="grid-cols-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {tasks.map(task => (
                         <TaskCard
                             key={task.id}
@@ -160,17 +186,19 @@ const TasksPage = () => {
                 </div>
             )}
 
-            <div className="flex-row" style={{ justifyContent: 'center', marginTop: '1rem' }}>
+            <div className="flex justify-center items-center gap-4 mt-4">
                 <button
+                    className="bg-bg-surface border border-border text-text-primary px-4 py-2 rounded hover:bg-bg-surface-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     onClick={() => setPage(p => Math.max(0, p - 1))}
                     disabled={page === 0}
                 >
                     &larr; Anterior
                 </button>
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold text-text-primary">
                     Página {page + 1} de {totalPages || 1}
                 </span>
                 <button
+                    className="bg-bg-surface border border-border text-text-primary px-4 py-2 rounded hover:bg-bg-surface-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     onClick={() => setPage(p => p + 1)}
                     disabled={page >= totalPages - 1}
                 >
