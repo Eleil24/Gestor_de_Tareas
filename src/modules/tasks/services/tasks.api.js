@@ -1,6 +1,6 @@
 import api from "../../../api/axios";
 
-export const getTasks = (page = 0, size = 5, title, startDate, endDate, completed) => {
+export const getTasks = (page = 0, size = 6, title, startDate, endDate, completed) => {
     const params = {
         page,
         size,
